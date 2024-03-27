@@ -460,7 +460,7 @@ if (!$is_alignment) {
                    " --genomeDir $star_genome_path " .
                    " --outSAMunmapped Within " .
                    " --outFilterType BySJout " .
-                   " --outSAMattributes NH HI AS NM MD " .
+                   " --outSAMattributes NH HI AS nM NM MD XS" .
                    " --outFilterMultimapNmax 20 " .
                    " --outFilterMismatchNmax 999 " .
                    " --outFilterMismatchNoverLmax 0.04 " .
@@ -480,7 +480,8 @@ if (!$is_alignment) {
 
                    ## different than ENCODE3 pipeline, which sorts output BAM
                    ## no need to do it here to save time and memory 
-                   " --outSAMtype BAM Unsorted " .
+                   #" --outSAMtype BAM Unsorted " .
+                   " --outSAMtype BAM SortedByCoordinate " .
                    ##
 
                    ## unlike ENCODE3, we don"t output bedGraph files
@@ -491,6 +492,11 @@ if (!$is_alignment) {
                    ## define output file prefix
                    " --outFileNamePrefix $imdName ";
                    ##
+
+                   ## Extra
+                   " --twopassMode Basic" .
+                   " --sjdbOverhang 100" .
+                   " --limitBAMsortRAM 40000000000" .
 
         if ( $star_gzipped_read_file ) {
             $command .= " --readFilesCommand zcat ";
